@@ -1,0 +1,8 @@
+Run the following command in bash shell to get the list of IP ranges of Google Cloud
+
+curl -s https://www.gstatic.com/ipranges/cloud.json | jq -r '.prefixes[] | if (.ipv4Prefix) then (.scope + ": " + .ipv4Prefix) else (.scope + ": " + .ipv6Prefix) end'
+
+In case you just want to restric the IP range of certain region, you may finetune it. eg for India only IP range:
+
+curl -s https://www.gstatic.com/ipranges/cloud.json | jq -r '.prefixes[] | select(.scope | (contains("asia-south1") or contains("asia-south2"))) | if (.ipv4Prefix) then (.scope + ": " + .ipv4Prefix) else (.scope + ": " + .ipv6Prefix) end'
+
